@@ -28,16 +28,12 @@ def smartsheet_ids(row):
     ) 
 
     response = requests.get('https://api.smartsheet.com/2.0/users', headers=headers, params=params)
-
     data = response.json()
     remove_licence(data['data'][0]['id'])
 
 def remove_licence(row):
     data = '{"admin": false, "licensedSheetCreator": false}'
-
     response = requests.put('https://api.smartsheet.com/2.0/users/{}'.format(row), headers=headers, data=data)
-    print (response)
-
     data = response.json()
     print (data['message'], '\nname:', data['result']['email'], '\nlicense_status:', data['result']['licensedSheetCreator'], '\n')
 
